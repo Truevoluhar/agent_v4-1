@@ -6,10 +6,13 @@ from agent.llm_openai import OpenAICompatibleLLMClient
 from agent.loop import run_agent
 from agent.agent import Agent
 from agent.verifier import Verifier
+from agent.db import AgentDatabase
 
 from pathlib import Path
 
-RESOURCES_PATH = str(Path("C:/Users/Shadow/source/repos/AI/agent_v4-1/resources"))
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+RESOURCES_PATH = str(PROJECT_ROOT / "resources")
+DATABASE_PATH = str(PROJECT_ROOT / "db" / "db_agent4-1.db")
 
 
 def main():
@@ -51,6 +54,10 @@ def main():
     args = parser.parse_args()
 
 
+    agent_db = AgentDatabase(DATABASE_PATH)
+
+    return
+
     verifier = Verifier(
         workspace=Path(args.workspace),
         artifacts_path="./artifacts"
@@ -74,10 +81,10 @@ def main():
         resources_path=RESOURCES_PATH
     )
     
-    #planner_response = run_agent(planner_session, planner_agent)
-    #print(planner_response)
+    planner_response = run_agent(planner_session, planner_agent)
+    print(planner_response)
     
-    #print(f"Session saved: ./myagent/sessions/{planner_session.id}.json")
+    print(f"Session saved: ./myagent/sessions/{planner_session.id}.json")
     
     
     
