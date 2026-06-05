@@ -1,0 +1,14 @@
+[project]
+name = "agentv4"
+version = "0.0.1"
+
+[project.scripts]
+agentv4 = "agent.cli:main"
+
+[tool.pytest.init_options]
+pytonpath = ["."]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["agent*"]
+exclude = ["resources*"]
