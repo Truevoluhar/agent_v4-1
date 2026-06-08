@@ -13,6 +13,11 @@ from agent.tools.save_test_cases import SAVE_TEST_CASES_TOOL
 from agent.tools.test_endpoint import TEST_ENDPOINT_TOOL
 from agent.tools.load_test_cases import LOAD_TEST_CASES_TOOL
 from agent.tools.save_test_results import SAVE_TEST_RESULTS_TOOL
+from agent.tools.create_new_task import CREATE_NEW_TASK_TOOL
+from agent.tools.get_tasks import GET_TASKS_TOOL
+from agent.tools.load_test import LOAD_TEST_TOOL
+from agent.tools.save_test_result import SAVE_TEST_RESULT_TOOL
+
 
 # Glavni register orodij
 #
@@ -23,7 +28,9 @@ TOOLS = {
         READ_FILE_TOOL, WRITE_FILE_TOOL, PATCH_FILE_TOOL,
         LIST_FILES_TOOL, GREP_TOOL, RUN_SHELL_TOOL, GET_GIT_DIFF_TOOL,
         WEBSERVICE_DEFINITION_TOOL, SAVE_TEST_CASES_TOOL, TEST_ENDPOINT_TOOL,
-        LOAD_TEST_CASES_TOOL, SAVE_TEST_RESULTS_TOOL
+        LOAD_TEST_CASES_TOOL, SAVE_TEST_RESULTS_TOOL,
+
+        CREATE_NEW_TASK_TOOL, GET_TASKS_TOOL, LOAD_TEST_TOOL, SAVE_TEST_RESULT_TOOL
         ]
 }
 
@@ -32,14 +39,14 @@ TOOLS = {
 # Orodja za agente
 PLANNER_TOOLS = {
     tool.name: tool for tool in [
-        SAVE_TEST_CASES_TOOL, WEBSERVICE_DEFINITION_TOOL
+        CREATE_NEW_TASK_TOOL, WEBSERVICE_DEFINITION_TOOL
     ]
 }
 
 EXECUTOR_TOOLS = {
     tool.name: tool for tool in [
-        WRITE_FILE_TOOL, READ_FILE_TOOL, TEST_ENDPOINT_TOOL,
-        LOAD_TEST_CASES_TOOL, SAVE_TEST_RESULTS_TOOL
+        TEST_ENDPOINT_TOOL,
+        GET_TASKS_TOOL, LOAD_TEST_TOOL, SAVE_TEST_RESULT_TOOL
     ]
 }
 

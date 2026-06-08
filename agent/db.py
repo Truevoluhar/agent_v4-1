@@ -10,6 +10,7 @@ class AgentDatabase:
     def connect(self):
         try:
             self.conn = sqlite3.connect(self.database_path)
+            self.conn.row_factory = sqlite3.Row
             print("[AgentDatabase] Successfully connected to database.")
         except Exception as e:
             print(f"[AgentDatabase]: ERROR in connect: {e}")

@@ -21,7 +21,7 @@ class Agent:
        
         
     def load_system_message(self, name):
-        print("Loading system message ...")
+        print(f"[]Loading system message ...")
         path = self.resources_path + "/" + self.name + "/AGENT.md"
         with open(path, "r") as f:
             content = f.read()

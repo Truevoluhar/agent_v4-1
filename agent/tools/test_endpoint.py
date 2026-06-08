@@ -53,6 +53,15 @@ def test_endpoint_executor(
             ok=False,
             error=str(e)
         )
+
+    except Exception as e:
+        return ToolResult(
+            ok=False,
+            error=str(e)
+        )
+    
+
+    
         
 TEST_ENDPOINT_TOOL = Tool(
     name="test_endpoint",

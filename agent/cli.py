@@ -7,6 +7,7 @@ from agent.loop import run_agent
 from agent.agent import Agent
 from agent.verifier import Verifier
 from agent.db import AgentDatabase
+from agent.context_builder import ContextBuilder
 
 from pathlib import Path
 
@@ -52,26 +53,27 @@ def main():
     )
     
     args = parser.parse_args()
-
-
+    
+    #
+    # INSTANCE OBJEKTOV
+    #
     agent_db = AgentDatabase(DATABASE_PATH)
+    agent_db.connect()
 
-    return
+    context_builder = ContextBuilder(agent_db)
 
     verifier = Verifier(
         workspace=Path(args.workspace),
         artifacts_path="./artifacts"
     )
 
-
     planner_session = Session(
         user_prompt=args.prompt, 
         workspace=args.workspace,
         permission_mode=args.permission_mode,
         interactive=args.non_interactive
-    )
-    
-        
+    ) 
+
     planner_agent = Agent(
         name="PLANNER", 
         model="unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF:Q3_K_M",
@@ -81,20 +83,6 @@ def main():
         resources_path=RESOURCES_PATH
     )
     
-    planner_response = run_agent(planner_session, planner_agent)
-    print(planner_response)
-    
-    print(f"Session saved: ./myagent/sessions/{planner_session.id}.json")
-    
-    
-    
-    # Verification of a planner task
-    is_planner_done = verifier.verify_planner_results()
-    print(f"Verifier result: {is_planner_done}")
-
-
-
-    # Executor run
     executor_session = Session(
         user_prompt=args.prompt, 
         workspace=args.workspace,
@@ -110,9 +98,38 @@ def main():
         temperature=0.3,
         resources_path=RESOURCES_PATH
     )
+
+
+
+
+    #
+    # IZVAJANJE
+    #
+
+    planner_response = run_agent(
+        session=planner_session, 
+        agent=planner_agent,
+        context_builder=context_builder
+    )
+    print(planner_response)
+    print(f"Session saved: ./myagent/sessions/{planner_session.id}.json")
     
-    executor_response = run_agent(executor_session, executor_agent, max_steps=75)
+        
+    # Verifikacija plannerjevega dela
+    is_planner_done = verifier.verify_planner_results()
+    print(f"Verifier result: {is_planner_done}")
+
+
+    executor_response = run_agent(
+        session=executor_session, 
+        agent=executor_agent, 
+        context_builder=context_builder, 
+        max_steps=75
+    )
     print(executor_response)
+
+
+    
     
 if __name__ == "__main__":
     main()

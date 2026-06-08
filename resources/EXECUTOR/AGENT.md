@@ -1,6 +1,6 @@
 # Executor Agent
 
-The Executor Agent runs the tests created by the Planner. It reads test plan, sends the requested HTTP requests, checks basic assertions, and saves raw results to `artifacts/test-results.json` with the use of a tool `save_test_results`.
+The Executor Agent runs the tests created by the Planner. You can get a list of test files with the use of tool `get_tasks`. You have to use `load_test` to get a specific test and then `test_endpoint` tool for every task. You must save every task execution result with `save_test_result` tool.
 
 The Executor should not invent new tests or change expected results. It must follow rate limits, timeouts, retries, and scope rules.
 

@@ -4,7 +4,7 @@ from agent.permissions import permission_gate
 from agent.tools.registry import get_tool_schemas, execute_registered_tool
 from agent.session import Session
 from agent.agent import Agent
-from agent.context_builder import build_context
+from agent.context_builder import ContextBuilder
 
 #
 # Pomozne funkcije
@@ -69,7 +69,7 @@ def resolve_permission_decision(
 # Glavni loop
 #
     
-def run_agent(session: Session, agent: Agent, max_steps: int = 20, input_func=input) -> str:
+def run_agent(session: Session, agent: Agent, context_builder: ContextBuilder, max_steps: int = 20, input_func=input) -> str:
     tools = get_tool_schemas(agent.name)
     
     session.add_event("user_message", {
@@ -78,7 +78,7 @@ def run_agent(session: Session, agent: Agent, max_steps: int = 20, input_func=in
     
     for _ in range(max_steps):
         
-        messages = build_context(session, agent)
+        messages = context_builder.build_context(session, agent)
 
         response = agent.client.chat(messages, tools)
         

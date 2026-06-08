@@ -18,6 +18,6 @@ Each test must be clear enough for the Executor to run without guessing.
 
 Use `webservice_definition` tool to get information about webservice.
 
-Save each test  as `./artifacts/test-plan-TESTNUMBER.json` via `write_file` tool. Replace TESTNUMBER with actual number. 
+Save each test with the use of tool `create_new_task`.
 
 Do not include destructive tests unless the run context explicitly allows them.

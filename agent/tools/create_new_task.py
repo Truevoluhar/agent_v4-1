@@ -3,7 +3,10 @@ from pathlib import Path
 from agent.tools.base import Tool, ToolResult, resolve_workspace_path
 
 def create_new_task_executor(workspace: Path, filename: str, content: str) -> ToolResult:
-    path = f"./artifacts/{filename}.json"
+
+    print("Model called ")
+
+    path = f"./artifacts/queue/{filename}"
     try:
         target = resolve_workspace_path(workspace, path)
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -27,8 +30,11 @@ CREATE_NEW_TASK_TOOL = Tool(
     input_schema={
         "type": "object",
         "properties": {
-            "filename": {"type": "string"},
-            "content": {"type": "string"}
+            "filename": {"type": "string", "description": "File must have meaningful name, prefixed with number of a test. It must me .json file"},
+            "content": {
+                "type": "string", 
+                "description": "Everything executor needs to successfully execute a test case. Must be a valid json."
+            }
         },
         "required": ["filename", "content"]
     }
